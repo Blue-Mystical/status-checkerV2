@@ -34,6 +34,13 @@ export default function Login(props) {
     });
   };
 
+  const showError = (errMsg) => {
+    console.log(errMsg);
+    goToTop();
+    setShowAlert(true);
+    setErrMsg(errMsg);
+  }
+
   const refreshToken = async () => {
     try {
       const response = await axios.get(backendURL + "/tokenrefresh", {
@@ -43,7 +50,7 @@ export default function Login(props) {
       navigate("/");
     } catch (error) {
       if (error.response && error.response.status !== 401) {
-        console.log(error.response);
+        showError(error.response.data.msg);
       }
     }
   };
@@ -68,10 +75,7 @@ export default function Login(props) {
         });
     } catch (error) {
       if (error.response) {
-        goToTop();
-        console.log(error.response.data.msg);
-        setShowAlert(true);
-        setErrMsg(error.response.data.msg);
+        showError(error.response.data.msg);
       }
     }
   };

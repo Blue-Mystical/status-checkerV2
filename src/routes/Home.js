@@ -7,13 +7,13 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
-import LoadingSpinner from "../components/spinner";
+import LoadingSpinner from "../components/objects/spinner";
 import WithdrawalList from "../components/WithdrawalList";
-import AdminWithdrawalList from "../components/AdminWithdrawalList";
+import AdminWithdrawalList from "../components/WithdrawalListAdmin";
 import { getErrorMessage, getTitleRank } from "../functions";
 import useToken from "../store/useToken";
 import useName from "../store/useName";
-import AdminUserList from "../components/AdminUserList";
+import AdminUserList from "../components/MemberListAdmin";
 import ModalAlert from "../components/modals/ModalAlert";
 
 // import { ContactsOutlined } from "@material-ui/icons";

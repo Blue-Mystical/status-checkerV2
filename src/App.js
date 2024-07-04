@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login";
 import Home from "./routes/Home";
 import Register from "./routes/Register";
-// import useToken from './store/useToken';
 import Withdrawal from "./routes/Withdrawal";
 
 export const backendURL = "http://localhost:3001";

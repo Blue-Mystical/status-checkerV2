@@ -24,13 +24,18 @@ export default function Withdrawal(props) {
   const getWithdral = async () => {
     try {
       const response = await axios.get(backendURL + "/withdrawals/" + id, {
+        timeout: 5000,
         withCredentials: true,
       });
       setWithdrawal(response.data.withdrawal);
       setLoaded(true);
     } catch (error) {
       if (error.response) {
-        console.log(error.response);
+        if (error.code === 'ECONNABORTED') {
+          console.log('Request timed out');
+        } else {
+          console.log(error.response);
+        }
       }
     }
   };

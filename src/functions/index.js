@@ -197,7 +197,7 @@ export function getErrorMessage(code) {
   if (code === 404) {
     return "404 Not Found";
   } else if (code === 403) {
-    return "403 Forbidden (Your token either expired or invalid.)";
+    return "403 Forbidden (Your token is either expired or invalid.)";
   } else if (code === 401) {
     return "401 Unauthorized";
   } else if (code === 400) {

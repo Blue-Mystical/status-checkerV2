@@ -44,6 +44,13 @@ export default function Register(props) {
     });
   };
 
+  const showError = (errMsg) => {
+    console.log(errMsg);
+    goToTop();
+    setShowAlert(true);
+    setErrMsg(errMsg);
+  }
+
   const refreshToken = async () => {
     try {
       const response = await axios.get(backendURL + "/tokenrefresh", {
@@ -53,11 +60,12 @@ export default function Register(props) {
       navigate("/");
     } catch (error) {
       if (error.response && error.response.status !== 401) {
-        console.log(error.response);
+        showError(error.response.data.msg);
       }
     }
   };
 
+  // Does login after registering
   const Login = async (e) => {
     try {
       await axios
@@ -77,47 +85,35 @@ export default function Register(props) {
         });
     } catch (error) {
       if (error.response) {
-        goToTop();
-        console.log(error.response.data.msg);
-        setShowAlert(true);
-        setErrMsg(error.response.data.msg);
+        showError(error.response.data.msg);
       }
     }
   };
 
-  
-
+  // Do not be me and allow admin usertype to be registered in older commits
   const Register = async (e) => {
     let validation = true
     e.preventDefault();
-    if (userType === 'admin') {
-      validation = false
-      goToTop();
-      setShowAlert(true);
-      setErrMsg("ไม่สามารถสมัครสมาชิกเนื่องจาก header ไม่ถูกต้อง");
-    }
     if (userType === 'student') {
       if (memberId === "") {
         validation = false
-        goToTop();
-        setShowAlert(true);
-        setErrMsg("กรุณากรอกรหัสรนักศึกษาด้วย");
+        showError("กรุณากรอกรหัสนักศึกษาด้วย");
       } else if (memberId.length < 11) {
         validation = false
-        goToTop();
-        setShowAlert(true);
-        setErrMsg("รหัสนักศึกษาควรมีตัวเลขจำนวน 11 ตัวพอดี");
+        showError("รหัสนักศึกษาควรมีตัวเลขจำนวน 11 ตัวพอดี");
       }
     }
-    if (userType !== 'lecturer') {
+    else if (userType !== 'lecturer') {
       if (nameTitle === 'none') {
         validation = false
-        goToTop();
-        setShowAlert(true);
-        setErrMsg("กรุณาใส่คำหน้าชื่อปกติหากไม่ใช่อาจารย์");
+        showError("กรุณาใส่คำหน้าชื่อปกติหากไม่ใช่อาจารย์");
       } else {
         setAcademicRank("none")
       }
+    }
+    else {
+      validation = false
+      showError("เกิดข้อผิดพลาดระหว่างการสมัครสมาชิก");
     }
     if (validation === true) {
       try {
